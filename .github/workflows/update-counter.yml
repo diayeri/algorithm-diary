@@ -3,19 +3,17 @@ name: Update LeetCode Counter
 on:
   push:
     paths:
-      - 'leetcode-js/**'
+      - 'leetcode-js/**/*'
       - 'README.md'
 
 jobs:
   update-counter:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
       - name: Count problems by difficulty
         run: |
-          # 난이도별 파일 수 카운트, 없으면 0 처리
           EASY=$(find leetcode-js/easy -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
           MEDIUM=$(find leetcode-js/medium -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
           HARD=$(find leetcode-js/hard -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
@@ -27,13 +25,12 @@ jobs:
 
       - name: Update README
         run: |
-          # README.md 내 숫자 업데이트
           sed -i "s/- Easy: [0-9]\+/- Easy: $EASY/" README.md
           sed -i "s/- Medium: [0-9]\+/- Medium: $MEDIUM/" README.md
           sed -i "s/- Hard: [0-9]\+/- Hard: $HARD/" README.md
           sed -i "s/- \*\*Total:\*\* [0-9]\+/- **Total:** $TOTAL/" README.md
 
-      - name: Commit changes
+      - name: Commit and Push changes
         run: |
           git config --global user.name 'diayeri'
           git config --global user.email 'diayeri.dev@gmail.com'
