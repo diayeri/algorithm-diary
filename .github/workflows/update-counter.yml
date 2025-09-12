@@ -15,9 +15,10 @@ jobs:
 
       - name: Count problems by difficulty
         run: |
-          EASY=$(ls leetcode-js/easy/*.js 2>/dev/null | wc -l)
-          MEDIUM=$(ls leetcode-js/medium/*.js 2>/dev/null | wc -l)
-          HARD=$(ls leetcode-js/hard/*.js 2>/dev/null | wc -l)
+          # 난이도별 파일 수 카운트, 없으면 0 처리
+          EASY=$(find leetcode-js/easy -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
+          MEDIUM=$(find leetcode-js/medium -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
+          HARD=$(find leetcode-js/hard -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
           TOTAL=$((EASY + MEDIUM + HARD))
           echo "EASY=$EASY" >> $GITHUB_ENV
           echo "MEDIUM=$MEDIUM" >> $GITHUB_ENV
@@ -26,6 +27,7 @@ jobs:
 
       - name: Update README
         run: |
+          # README.md 내 숫자 업데이트
           sed -i "s/- Easy: [0-9]\+/- Easy: $EASY/" README.md
           sed -i "s/- Medium: [0-9]\+/- Medium: $MEDIUM/" README.md
           sed -i "s/- Hard: [0-9]\+/- Hard: $HARD/" README.md
