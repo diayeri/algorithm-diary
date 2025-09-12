@@ -39,10 +39,11 @@ jobs:
       # 변경사항 커밋 & 푸시
       - name: Commit and Push changes
         env:
+          GH_EMAIL: ${{ secrets.GH_EMAIL }}
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'diayeri'
-          git config --global user.email 'diayeri.dev@gmail.com'
+          git config --global user.email $GH_EMAIL
           git add README.md
           git commit -m "Update solved problem count" || echo "No changes to commit"
           git push https://$GH_PAT@github.com/diayeri/leetcode-js.git
