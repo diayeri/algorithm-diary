@@ -39,4 +39,4 @@ jobs:
           git config --global user.email 'diayeri.dev@gmail.com'
           git add README.md
           git commit -m "Update solved problem count" || echo "No changes to commit"
-          git push
+          git push https://${{ secrets.GH_PAT }}@github.com/diayeri/leetcode-js.git
