@@ -1,7 +1,7 @@
 /**
  * 문제: 2626. Array Reduce Transformation
  * 난이도: Easy
- * 풀이: 이전 결과를 계속 누적하면서 배열 순회 (실제 reduce처럼 구현)
+ * 풀이: 이전 결과를 계속 누적하면서 배열 순회
  * URL: https://leetcode.com/problems/array-reduce-transformation/description/?envType=study-plan-v2&envId=30-days-of-javascript
  * 날짜: 2025-09-12
  */
