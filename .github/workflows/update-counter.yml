@@ -3,7 +3,9 @@ name: Update LeetCode Counter
 on:
   push:
     paths:
-      - 'leetcode-js/**'
+      - 'easy/**'
+      - 'medium/**'
+      - 'hard/**'
       - 'README.md'
 
 jobs:
