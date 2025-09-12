@@ -13,14 +13,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Count JS files
+      - name: Count problems by difficulty
         run: |
-          COUNT=$(ls leetcode-js/*.js 2>/dev/null | wc -l)
-          echo "PROBLEM_COUNT=$COUNT" >> $GITHUB_ENV
+          EASY=$(ls leetcode-js/easy/*.js 2>/dev/null | wc -l)
+          MEDIUM=$(ls leetcode-js/medium/*.js 2>/dev/null | wc -l)
+          HARD=$(ls leetcode-js/hard/*.js 2>/dev/null | wc -l)
+          TOTAL=$((EASY + MEDIUM + HARD))
+          echo "EASY=$EASY" >> $GITHUB_ENV
+          echo "MEDIUM=$MEDIUM" >> $GITHUB_ENV
+          echo "HARD=$HARD" >> $GITHUB_ENV
+          echo "TOTAL=$TOTAL" >> $GITHUB_ENV
 
       - name: Update README
         run: |
-          sed -i "s/Total solved: [0-9]\+/Total solved: $PROBLEM_COUNT/" README.md
+          sed -i "s/- Easy: [0-9]\+/- Easy: $EASY/" README.md
+          sed -i "s/- Medium: [0-9]\+/- Medium: $MEDIUM/" README.md
+          sed -i "s/- Hard: [0-9]\+/- Hard: $HARD/" README.md
+          sed -i "s/- \*\*Total:\*\* [0-9]\+/- **Total:** $TOTAL/" README.md
 
       - name: Commit changes
         run: |
