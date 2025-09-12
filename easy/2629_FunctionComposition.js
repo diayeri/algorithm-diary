@@ -22,3 +22,9 @@ var compose = function(functions) {
         return functions.reduceRight((acc, fn) => fn(acc), x);
     };
 };
+
+/**
+ * 고차함수 = 껍데기를 만들어서 내부 연산을 재사용 가능하게 만드는 도구
+ - 반복되는 계산을 줄이고, 코드가 깔끔해지는 효과
+ - 성능 최적화 목적이라기보다는 개념적 이해, 재사용성, 코드 간결함에 더 의미가 있음
+ */
