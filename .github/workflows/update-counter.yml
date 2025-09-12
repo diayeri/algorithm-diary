@@ -11,20 +11,24 @@ on:
 jobs:
   update-counter:
     runs-on: ubuntu-latest
+
     steps:
+      # 레포 체크아웃
       - uses: actions/checkout@v3
 
+      # 난이도별 파일 수 카운트
       - name: Count problems by difficulty
         run: |
-          EASY=$(find leetcode-js/easy -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
-          MEDIUM=$(find leetcode-js/medium -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
-          HARD=$(find leetcode-js/hard -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
+          EASY=$(find easy -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
+          MEDIUM=$(find medium -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
+          HARD=$(find hard -type f -name "*.js" 2>/dev/null | wc -l || echo 0)
           TOTAL=$((EASY + MEDIUM + HARD))
           echo "EASY=$EASY" >> $GITHUB_ENV
           echo "MEDIUM=$MEDIUM" >> $GITHUB_ENV
           echo "HARD=$HARD" >> $GITHUB_ENV
           echo "TOTAL=$TOTAL" >> $GITHUB_ENV
 
+      # README 업데이트
       - name: Update README
         run: |
           sed -i "s/- Easy: [0-9]\+/- Easy: $EASY/" README.md
@@ -32,10 +36,13 @@ jobs:
           sed -i "s/- Hard: [0-9]\+/- Hard: $HARD/" README.md
           sed -i "s/- \*\*Total:\*\* [0-9]\+/- **Total:** $TOTAL/" README.md
 
+      # 변경사항 커밋 & 푸시
       - name: Commit and Push changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'diayeri'
           git config --global user.email 'diayeri.dev@gmail.com'
           git add README.md
           git commit -m "Update solved problem count" || echo "No changes to commit"
-          git push https://${{ secrets.GH_PAT }}@github.com/diayeri/leetcode-js.git
+          git push https://$GH_PAT@github.com/diayeri/leetcode-js.git
