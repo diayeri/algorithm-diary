@@ -5,6 +5,6 @@ Weekly goal: 5+ problems
 
 **Problems Solved**
 - Easy: 3
-- Medium: 0
+- Medium: 1
 - Hard: 0
-- **Total:** 3
+- **Total:** 4
