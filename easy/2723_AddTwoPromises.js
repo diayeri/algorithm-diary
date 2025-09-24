@@ -16,6 +16,8 @@ var addTwoPromises = async function(promise1, promise2) {
     const p2 = await promise2;
     return p1 + p2;
 };
+// 참고: 아래도 가능하긴 함
+// return await promise1 + await promise2; 
 
 /**
  * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
